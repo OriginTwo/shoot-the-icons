@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b6s170dxjvd1c"
+path="res://.godot/imported/Three Red Hearts - Out of Time.ogg-61bff46367438342d7af44e56ec5f301.oggvorbisstr"
+
+[deps]
+
+source_file="res://assets/musics/Three Red Hearts - Out of Time.ogg"
+dest_files=["res://.godot/imported/Three Red Hearts - Out of Time.ogg-61bff46367438342d7af44e56ec5f301.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

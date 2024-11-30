@@ -1,0 +1,19 @@
+art style:
+	- 2 or 4 colors
+	- "enemies" will be gui icons
+
+palette: https://lospec.com/palette-list/en4
+icons: https://pixel-boy.itch.io/icon-godot-node
+musics: https://tallbeard.itch.io/three-red-hearts-prepare-to-dev
+
+[X] enemy
+[X] score
+[X] multiple hits before game over
+[X] audio
+[X] juice
+[/] balance & difficulty curve
+[X] menu
+[X] game over
+[X] save data
+[X] music??
+[ ] playtest + export

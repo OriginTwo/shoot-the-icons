@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://drhqy3txhc0tp"]
+
+[ext_resource type="Script" path="res://sources/scripts/enemy.gd" id="1_u7grx"]
+[ext_resource type="Texture2D" uid="uid://nfolwpayjbda" path="res://assets/icon_atlas.png" id="2_3n3vg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xneil"]
+size = Vector2(16, 16)
+
+[node name="Enemy" type="Area2D"]
+z_index = 1
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_u7grx")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("2_3n3vg")
+hframes = 14
+vframes = 6
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_xneil")

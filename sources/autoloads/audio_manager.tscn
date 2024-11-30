@@ -1,0 +1,62 @@
+[gd_scene load_steps=14 format=3 uid="uid://bkl1wg4yuafeo"]
+
+[ext_resource type="Script" path="res://sources/autoloads/scripts/audio_manager.gd" id="1_x6f1h"]
+[ext_resource type="Script" path="res://sources/autoloads/scripts/sound_desc.gd" id="2_f10g2"]
+[ext_resource type="AudioStream" uid="uid://bgfu77oc00nil" path="res://assets/shoot.wav" id="3_77lki"]
+[ext_resource type="AudioStream" uid="uid://w4ppb3b7j2bg" path="res://assets/hurt.wav" id="4_gm462"]
+[ext_resource type="AudioStream" uid="uid://bgtctbfuqf6qq" path="res://assets/enemy_destroyed.wav" id="5_vd4uh"]
+[ext_resource type="AudioStream" uid="uid://dtfc42sgyb24c" path="res://assets/game_over.wav" id="6_tpjx7"]
+[ext_resource type="AudioStream" uid="uid://bfw51sue6821w" path="res://assets/game_start.wav" id="7_uprui"]
+[ext_resource type="AudioStream" uid="uid://bv7ddfeefgldx" path="res://assets/musics/Three Red Hearts - Pixel War 1.ogg" id="8_lswcb"]
+
+[sub_resource type="Resource" id="Resource_wfd7s"]
+script = ExtResource("2_f10g2")
+kind = 0
+stream = ExtResource("3_77lki")
+volume = -3.0
+pitch_scale = 0.7
+pitch_randomness = 0.2
+
+[sub_resource type="Resource" id="Resource_atm73"]
+script = ExtResource("2_f10g2")
+kind = 1
+stream = ExtResource("4_gm462")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.1
+
+[sub_resource type="Resource" id="Resource_t3auw"]
+script = ExtResource("2_f10g2")
+kind = 2
+stream = ExtResource("5_vd4uh")
+volume = 0.0
+pitch_scale = 1.0
+pitch_randomness = 0.2
+
+[sub_resource type="Resource" id="Resource_1cfnq"]
+script = ExtResource("2_f10g2")
+kind = 4
+stream = ExtResource("6_tpjx7")
+volume = -9.0
+pitch_scale = 1.0
+pitch_randomness = 0.0
+
+[sub_resource type="Resource" id="Resource_hfn6o"]
+script = ExtResource("2_f10g2")
+kind = 3
+stream = ExtResource("7_uprui")
+volume = -7.0
+pitch_scale = 1.0
+pitch_randomness = 0.0
+
+[node name="AudioManager" type="Node2D" node_paths=PackedStringArray("music")]
+script = ExtResource("1_x6f1h")
+sound_list = Array[ExtResource("2_f10g2")]([SubResource("Resource_wfd7s"), SubResource("Resource_atm73"), SubResource("Resource_t3auw"), SubResource("Resource_1cfnq"), SubResource("Resource_hfn6o")])
+music = NodePath("MusicPlayer")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_lswcb")
+volume_db = -12.0
+pitch_scale = 0.9
+playback_type = 1
+parameters/looping = true

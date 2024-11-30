@@ -1,0 +1,239 @@
+[gd_scene load_steps=19 format=3 uid="uid://c30dyltchje0t"]
+
+[ext_resource type="Script" path="res://sources/scripts/game.gd" id="1_b3w60"]
+[ext_resource type="PackedScene" uid="uid://m2mpt74yrxyc" path="res://sources/turret.tscn" id="1_hkdg7"]
+[ext_resource type="Script" path="res://sources/scripts/turret_manager.gd" id="1_tlvkc"]
+[ext_resource type="Script" path="res://sources/scripts/enemy_spawners.gd" id="3_pkntx"]
+[ext_resource type="Script" path="res://sources/scripts/damage_receiver.gd" id="4_33gmu"]
+[ext_resource type="Script" path="res://sources/scripts/game_ui.gd" id="4_o1g81"]
+[ext_resource type="Shader" path="res://sources/shaders/vignette.gdshader" id="6_81wyp"]
+[ext_resource type="Script" path="res://sources/scripts/damage_flash.gd" id="6_hs28q"]
+[ext_resource type="FontFile" uid="uid://cpes45jioqfw2" path="res://assets/press_start_2p.ttf" id="7_dik71"]
+[ext_resource type="Texture2D" uid="uid://b0155yenj8di0" path="res://assets/input.png" id="10_5gosr"]
+[ext_resource type="Script" path="res://sources/scripts/control_guide.gd" id="10_617yy"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1ak1d"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_um4xb"]
+frequency = 0.0125
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t52n4"]
+width = 180
+height = 240
+seamless = true
+noise = SubResource("FastNoiseLite_um4xb")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_orv5j"]
+shader = ExtResource("6_81wyp")
+shader_parameter/color = Color(0.941176, 0.313726, 0.25098, 1)
+shader_parameter/alpha = 0.0
+shader_parameter/vignette_lower_edge = 0.4
+shader_parameter/vignette_upper_edge = 0.8
+shader_parameter/time_scale = 0.2
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_t52n4")
+
+[sub_resource type="Animation" id="Animation_ix6xf"]
+resource_name = "default"
+length = 0.5
+loop_mode = 2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_0v70f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Left:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Right:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i1p0h"]
+_data = {
+"RESET": SubResource("Animation_0v70f"),
+"default": SubResource("Animation_ix6xf")
+}
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_b3w60")
+
+[node name="TurretManager" type="Node2D" parent="."]
+script = ExtResource("1_tlvkc")
+
+[node name="LaneHighlight" type="ColorRect" parent="TurretManager"]
+z_index = -2
+offset_right = 36.0
+offset_bottom = 240.0
+color = Color(1, 1, 1, 0.0392157)
+
+[node name="Turret1" parent="TurretManager" instance=ExtResource("1_hkdg7")]
+position = Vector2(18, 240)
+
+[node name="Turret2" parent="TurretManager" instance=ExtResource("1_hkdg7")]
+position = Vector2(54, 240)
+
+[node name="Turret3" parent="TurretManager" instance=ExtResource("1_hkdg7")]
+position = Vector2(90, 240)
+
+[node name="Turret4" parent="TurretManager" instance=ExtResource("1_hkdg7")]
+position = Vector2(126, 240)
+
+[node name="Turret5" parent="TurretManager" instance=ExtResource("1_hkdg7")]
+position = Vector2(162, 240)
+
+[node name="EnemySpawners" type="Node2D" parent="."]
+position = Vector2(0, -20)
+script = ExtResource("3_pkntx")
+
+[node name="SpawnTimer" type="Timer" parent="EnemySpawners"]
+wait_time = 3.0
+autostart = true
+
+[node name="Spawner1" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(18, 0)
+
+[node name="Spawner2" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(54, 0)
+
+[node name="Spawner3" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(90, 0)
+
+[node name="Spawner4" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(126, 0)
+
+[node name="Spawner5" type="Marker2D" parent="EnemySpawners"]
+position = Vector2(162, 0)
+
+[node name="DamageReceiver" type="Area2D" parent="."]
+position = Vector2(0, 202)
+script = ExtResource("4_33gmu")
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageReceiver"]
+shape = SubResource("WorldBoundaryShape2D_1ak1d")
+
+[node name="Line2D" type="Line2D" parent="DamageReceiver"]
+points = PackedVector2Array(180, 0, 0, 0)
+width = 1.0
+default_color = Color(0.784314, 0.784314, 0.784314, 0.784314)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = -10
+script = ExtResource("4_o1g81")
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+unique_name_in_owner = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -16.0
+offset_right = 40.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.627451)
+theme_override_fonts/font = ExtResource("7_dik71")
+theme_override_font_sizes/font_size = 16
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HitPointDisplay" type="HBoxContainer" parent="UI"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 5)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 11.0
+offset_right = 40.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="UI/HitPointDisplay"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0.627451)
+
+[node name="DamageFlash" type="CanvasLayer" parent="."]
+script = ExtResource("6_hs28q")
+
+[node name="ColorRect" type="ColorRect" parent="DamageFlash"]
+material = SubResource("ShaderMaterial_orv5j")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlGuide" type="CanvasLayer" parent="."]
+layer = 100
+script = ExtResource("10_617yy")
+
+[node name="Visual" type="Node2D" parent="ControlGuide"]
+position = Vector2(90, 170)
+
+[node name="Left" type="Sprite2D" parent="ControlGuide/Visual"]
+position = Vector2(-13, 0)
+texture = ExtResource("10_5gosr")
+hframes = 4
+
+[node name="Right" type="Sprite2D" parent="ControlGuide/Visual"]
+position = Vector2(13, 0)
+texture = ExtResource("10_5gosr")
+hframes = 4
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ControlGuide/Visual"]
+libraries = {
+"": SubResource("AnimationLibrary_i1p0h")
+}
+autoplay = "default"
